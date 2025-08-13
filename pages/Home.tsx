@@ -38,7 +38,9 @@ const [result, setResult] = useState<HomeData | null>(null)
   return (
     <>
     {result && (
+      <div className="m-auto">
       <IntroSection pageTitle={result.pageTitle} name={result.name} intro={result.intro} tagline={result.tagline} links={result.links} />
+      </div>
     )}
       </>
   )
