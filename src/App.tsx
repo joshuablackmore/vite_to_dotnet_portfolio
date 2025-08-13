@@ -2,20 +2,21 @@ import './App.css'
 import Home from '../pages/Home'
 import MyMusic from '../pages/MyMusic'
 import Engineering from '../pages/Engineering'
-import { Routes, Route, Link } from 'react-router-dom'
+import Listening from '../pages/Listening'
+import { Routes, Route } from 'react-router-dom'
+import Nav from './components/Nav'
 
 function App() {
   return (
     <div className="app-container">
       <header>
-        <Link to="/">Home</Link>
-        <Link to="/mymusic">My Music</Link>
-        <Link to="/engineering">Engineering</Link>
+        <Nav />
       </header>
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/mymusic" element={<MyMusic />} />
+          <Route path="/music/my" element={<MyMusic />} />
+          <Route path="/music/listening" element={<Listening />} />
           <Route path='/engineering' element={<Engineering />} />
         </Routes>
       </main>

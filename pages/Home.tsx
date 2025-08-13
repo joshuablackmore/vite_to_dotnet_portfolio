@@ -1,49 +1,48 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IntroSection } from "../src/components/IntroSection";
+import { getHomeData } from "../api";
+import type { HomeData } from "../api/types";
 
 
-export type HomeData = {
-  pageTitle: string;
-  name: string;
-  intro: string;
-  tagline: string;
-  links: {
-    name: string;
-    url: string;
-  }[];
-}
+const Home = () => {  
 
-
-const Home = () => {
-
-
-const [result, setResult] = useState<HomeData | null>(null)
+const [data, setData] = useState<HomeData | null>(null)
+const [isLoading, setIsLoading] = useState(true)
+const [error, setError] = useState<string | null>(null)
 
     useEffect(() => {
         const getData = async () => {
-          const data = await fetch('http://localhost:5007/api/public/home', {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
-          const result = await data.json();
-          console.log(result)
-          setResult(result);
+          try {
+            const data = await getHomeData();
+            console.log(data)
+            setData(data);
+            setIsLoading(false);
+          } catch (error) {
+            console.error('Error fetching home data:', error);
+            setIsLoading(true);
+            setError('Failed to fetch home data');
+            }
         };
         getData();
     }, []);
 
-  return (
-    <>
-    {result && (
+    if (isLoading) {
+      return <div>Loading...</div>;
+    }
+
+    if (error) {
+      return <div>Error: {error}</div>;
+    }
+
+    return (
+      <>
+      {data && (
       <div className="m-auto">
-      <IntroSection pageTitle={result.pageTitle} name={result.name} intro={result.intro} tagline={result.tagline} links={result.links} />
+      <IntroSection pageTitle={data.pageTitle} name={data.name} intro={data.intro} tagline={data.tagline} links={data.links} />
       </div>
-    )}
+      )}
       </>
-  )
+    )
 }
 
 export default Home

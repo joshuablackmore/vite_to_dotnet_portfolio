@@ -1,14 +1,14 @@
 
-import type { HomeData } from '../../pages/Home'
+import type { HomeData } from '../../api/types'
 
-export const IntroSection = ({name, intro, tagline, links}: HomeData) => {
+export const IntroSection = (props: HomeData) => {
   return (
     <div>
-      <h1>{name}</h1>
-      <p>{intro}</p>
-      <p>{tagline}</p>
+      <h1>{props.name}</h1>
+      <p>{props.intro}</p>
+      <p>{props.tagline}</p>
       <ul>
-        {links.map((link: { name: string; url: string }) => (
+        {props.links.map((link: { name: string; url: string }) => (
           <li key={link.name}>
             <a href={link.url}>{link.name}</a>
           </li>
@@ -17,3 +17,4 @@ export const IntroSection = ({name, intro, tagline, links}: HomeData) => {
     </div>
   )
 }
+  
