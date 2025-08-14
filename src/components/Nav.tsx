@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import type { NavLink } from "../../api/types";
 import { getNavLinks } from "../../api/navigationService";
+import logoSrc from "../assets/joshua_blackmore_logo.svg";
 
 const Nav = () => {
   const [navLinks, setNavLinks] = useState<NavLink[]>([]);
@@ -61,7 +62,7 @@ const Nav = () => {
   return (
     <div className="navbar bg-base-100 shadow-sm">
     <div className="navbar-start">
-      <a className="btn btn-ghost text-xl">LOGO here!</a>
+      <Link to="/" className=""><img src={logoSrc} alt="Logo" width="50" height="50" /></Link>
     </div>
     {/* Mobile menu */}
     <div className="navbar-end lg:hidden">
@@ -126,13 +127,13 @@ const Nav = () => {
     </div>
   {/* Desktop menu */}
   <div className="navbar-end hidden lg:flex">
-    <ul className="menu menu-horizontal">
+    <ul className="menu menu-horizontal items-center z-[50]">
         {homeLink && <Link to="/"><a>{homeLink.name}</a></Link>}
       <li>
         {musicLinks && 
         <details ref={detailsRef}>
           <summary>Music</summary>
-          <ul className="">
+          <ul className="w-[170px] dropdown-start">
             {musicLinks.map((link: NavLink) => (
               <li key={link.name}>
                 <Link to={link.url}><a onClick={() => handleNavigation(link.url)}>{link.name}</a></Link>
